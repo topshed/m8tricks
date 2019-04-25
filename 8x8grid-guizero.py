@@ -18,9 +18,9 @@ def no_hat_check():
     global ONEMU
     NOHAT = yesno("No SenseHAT detected", "No SenseHat detected - Do you want to carry on anyway?")
     if NOHAT:
-        if "arm" in  os.uname().machine: 
-            ONEMU = yesno("Looks like a Pi","Do you want to try to run in the SenseHat emulator?")      
-                
+        if "arm" in  os.uname().machine:
+            ONEMU = yesno("Looks like a Pi","Do you want to try to run in the SenseHat emulator?")
+
     else:
         sys.exit()
 
@@ -33,7 +33,7 @@ blank_frame = [(0,0,0), (0,0,0), (0,0,0), (0,0,0),(0,0,0), (0,0,0),(0,0,0), (0,0
                 (0,0,0), (0,0,0), (0,0,0), (0,0,0),(0,0,0), (0,0,0),(0,0,0), (0,0,0),
                 (0,0,0), (0,0,0), (0,0,0), (0,0,0),(0,0,0), (0,0,0),(0,0,0), (0,0,0),
                 (0,0,0), (0,0,0), (0,0,0), (0,0,0),(0,0,0), (0,0,0),(0,0,0), (0,0,0)]
-                
+
 frames = {1:blank_frame.copy()}
 current_frame_number =1
 framerate =  1 # frames per second
@@ -45,8 +45,8 @@ def illum_pixel(x,y):
     matrix.set_pixel(x,y,col)
     if not NOHAT:
         sh.set_pixel(x,y,col)
-    
-    
+
+
 def col_select(x,y):
     global col
     if y == 0:
@@ -88,19 +88,19 @@ def hex_to_rgb(hex):
 
 def p_clicked(x,y):
     if (x <= 7) and (y <= 7):
-        
+
         if matrix.get_pixel(x,y) == "black":
             illum_pixel(x,y)
             frames[current_frame_number][(y*8)+x] = col
         elif hex_to_rgb(str(matrix.get_pixel(x,y).strip('#'))) == col:
             matrix.set_pixel(x,y,"black")
             sh.set_pixel(x,y,(0,0,0))
-            frames[current_frame_number][(y*8)+x] = (0,0,0)        
+            frames[current_frame_number][(y*8)+x] = (0,0,0)
         else:
             illum_pixel(x,y)
-            frames[current_frame_number][(y*8)+x] = col 
+            frames[current_frame_number][(y*8)+x] = col
 
-    
+
 def clear_matrix():
     global NOHAT
     if not NOHAT:
@@ -109,7 +109,7 @@ def clear_matrix():
         for y in range(8):
             matrix.set_pixel(x,y,col)
             frames[current_frame_number][(y*8)+x] = col
-           
+
 
 def new_frame():
     global current_frame_number
@@ -119,7 +119,7 @@ def new_frame():
         for f in range(len(frames), current_frame_number, -1):
             frames[f+1] = frames[f].copy()
     frames[current_frame_number+1] = blank_frame.copy()
-    current_frame_number +=1  
+    current_frame_number +=1
 
     load_frame()
 
@@ -130,10 +130,10 @@ def copy_frame():
         for f in range(len(frames), current_frame_number, -1):
             frames[f+1] = frames[f].copy()
     frames[current_frame_number+1] = frames[current_frame_number].copy()
-    current_frame_number +=1  
+    current_frame_number +=1
 
     load_frame()
-    
+
 def delete_frame():
     global current_frame_number
     global frames
@@ -144,12 +144,12 @@ def delete_frame():
                 frames[f] = frames[f+1].copy()
         current_frame_number-=1
         del frames[len(frames)]
-     
+
         load_frame()
     else:
         warn("Heads up", "Only one frame exits - you can't delete it")
-        
-    
+
+
 def load_frame():
     global NOHAT
     frame_status_text.value=("Frame " + str(current_frame_number).zfill(3) + " of " + str(len(frames)).zfill(3))
@@ -159,7 +159,7 @@ def load_frame():
         for y in range(8):
             matrix.set_pixel(x,y,frames[current_frame_number][(y*8)+x])
     load_other_frames()
-            
+
 def load_other_frames():
     prev_matrix.color="black"
     next_matrix.color="black"
@@ -170,15 +170,15 @@ def load_other_frames():
                     next_matrix.set_pixel(x,y,frames[current_frame_number+1][(y*8)+x])
             for x in range(8):
                 for y in range(8):
-                    prev_matrix.set_pixel(x,y,"grey")                  
+                    prev_matrix.set_pixel(x,y,"grey")
         else:
             for x in range(8):
                 for y in range(8):
                     prev_matrix.set_pixel(x,y,frames[current_frame_number-1][(y*8)+x])
             for x in range(8):
                 for y in range(8):
-                    next_matrix.set_pixel(x,y,"grey")   
-                
+                    next_matrix.set_pixel(x,y,"grey")
+
     if len(frames) >= 3:
         if current_frame_number == 1:
             for x in range(8):
@@ -186,7 +186,7 @@ def load_other_frames():
                     next_matrix.set_pixel(x,y,frames[current_frame_number+1][(y*8)+x])
             for x in range(8):
                 for y in range(8):
-                    prev_matrix.set_pixel(x,y,"grey")                  
+                    prev_matrix.set_pixel(x,y,"grey")
         elif current_frame_number == len(frames):
             for x in range(8):
                 for y in range(8):
@@ -200,16 +200,16 @@ def load_other_frames():
                     next_matrix.set_pixel(x,y,frames[current_frame_number+1][(y*8)+x])
             for x in range(8):
                 for y in range(8):
-                    prev_matrix.set_pixel(x,y,frames[current_frame_number-1][(y*8)+x])                 
+                    prev_matrix.set_pixel(x,y,frames[current_frame_number-1][(y*8)+x])
 
 
-        
+
 def left():
     global current_frame_number
     if current_frame_number > 1:
         current_frame_number -=1
         load_frame()
-    
+
 def right():
     global current_frame_number
     if current_frame_number < len(frames):
@@ -238,19 +238,19 @@ def right_play():
             play()
         else:
             stopped = True
-            
-        
+
+
 def go_end():
     global current_frame_number
     global frames
     current_frame_number = len(frames)
     load_frame()
-    
+
 def go_start():
     global current_frame_number
     current_frame_number =1
     load_frame()
-    
+
 
 def play():
     global stopped
@@ -270,11 +270,11 @@ def play():
         if looping:
             for i in range(1,len(frames)+1): # because we set current_frame_number = 0 when looping we need an extra iteration
                     frame_status_text.after(t*i,right_play)
-        else:  
+        else:
             for i in range(1,len(frames)):
                     frame_status_text.after(t*i,right_play)
 
-        
+
 def stop():
     global stopped
     stopped = True
@@ -289,8 +289,8 @@ def stop():
 
 def export_as_python():
     global framerate
-    filename = filedialog.asksaveasfilename(initialdir = HOME, 
-                                        title = "Export file", 
+    filename = filedialog.asksaveasfilename(initialdir = HOME,
+                                        title = "Export file",
                                         filetypes = (("python files","*.py"),("all files","*.*")))
     if len(filename) != 0:
         with open(filename,"w") as export_file:
@@ -302,16 +302,16 @@ def export_as_python():
             for e in range(1,len(frames)+1):
                 export_file.write("sh.set_pixels(" +str(frames[e]) + ")\n")
                 export_file.write("sleep(1/"+str(framerate) +")\n")
-            
 
-            
+
+
 def import_python():
     global framerate
     global current_frame_number
     current_frame_number = 1
-    filename = filedialog.askopenfilename(initialdir = HOME, 
-                                        title = "Select file", 
-                                        filetypes = (("python files","*.py"),("all files","*.*")))                                    
+    filename = filedialog.askopenfilename(initialdir = HOME,
+                                        title = "Select file",
+                                        filetypes = (("python files","*.py"),("all files","*.*")))
     if len(filename) != 0:
         with open(filename,"r") as import_file:
             line1 = import_file.readline()
@@ -340,23 +340,23 @@ def import_python():
                         load_frame()
                     except:
                         error("Import failed", "Sorry, that file could not be imported")
-                    
-            
+
+
 def set_framerate():
     global framerate
     framerate = slider_framerate.value
-    
+
 def sh_rotation():
     sh.set_rotation(int(combo_rotation.value))
 
 app = App(title="8x8 Grid Editor",layout="grid",height=540, width=500)
 box_top = Box(app, layout="grid", grid=[0,0,5,1])
-button_go_start = PushButton(box_top, command=go_start,grid=[0,0,2,1], text = "<<", image=HOME+"/RPi_8x8GridDraw/images/endl.png")
-button_left = PushButton(box_top, command=left,grid=[2,0,2,1], text = "<",image=HOME+"/RPi_8x8GridDraw/images/left.png")
-button_play = PushButton(box_top, command=play,grid=[4,0,2,1], text = "PLAY", image=HOME+"/RPi_8x8GridDraw/images/play.png")
-button_stop = PushButton(box_top, command=stop,grid=[6,0,2,1], text = "STOP",enabled=False, image=HOME+"/RPi_8x8GridDraw/images/stop.png")
-button_right = PushButton(box_top, command=right,grid=[8,0,2,1], text = ">",image=HOME+"/RPi_8x8GridDraw/images/right.png")
-button_go_end = PushButton(box_top, command=go_end,grid=[10,0,2,1], text = ">>",image=HOME+"/RPi_8x8GridDraw/images/endr.png")
+button_go_start = PushButton(box_top, command=go_start,grid=[0,0,2,1], text = "<<", image=HOME+"/m8tricks/images/endl.png")
+button_left = PushButton(box_top, command=left,grid=[2,0,2,1], text = "<",image=HOME+"/m8tricks/images/left.png")
+button_play = PushButton(box_top, command=play,grid=[4,0,2,1], text = "PLAY", image=HOME+"/m8tricks/images/play.png")
+button_stop = PushButton(box_top, command=stop,grid=[6,0,2,1], text = "STOP",enabled=False, image=HOME+"/m8tricks/images/stop.png")
+button_right = PushButton(box_top, command=right,grid=[8,0,2,1], text = ">",image=HOME+"/m8tricks/images/right.png")
+button_go_end = PushButton(box_top, command=go_end,grid=[10,0,2,1], text = ">>",image=HOME+"/m8tricks/images/endr.png")
 checkbox_repeat = CheckBox(app, text=" Repeat",grid=[6,0,1,1])
 box_framerate = Box(app, layout="grid", grid=[7,0,2,1])
 box_framerate.set_border(0,"#ff0000")
@@ -418,7 +418,7 @@ else:
 
 
 if not NOHAT: # SenseHat detected to run normally
-    from sense_hat import SenseHat       
+    from sense_hat import SenseHat
     sh = SenseHat()
     sh.clear(0,0,0)
 else:
@@ -432,5 +432,3 @@ else:
         combo_rotation.disable()
 
 app.display()
-
-
