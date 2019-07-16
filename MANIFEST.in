@@ -1,3 +1,4 @@
-include project.rst
-include licence.md
-include m8tricks/images/*.png
+include *.in
+include *.md
+include *.rst
+recursive-include m8tricks *.png

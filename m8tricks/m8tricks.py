@@ -8,7 +8,8 @@ import ast
 from tkinter import filedialog
 from pathlib import Path
 
-#HOME = str(Path.home())
+HOME = str(Path.home())
+HERE = os.path.dirname(os.path.realpath(__file__))
 
 import os, sys
 
@@ -353,12 +354,12 @@ def sh_rotation():
 
 app = App(title="8x8 Grid Editor",layout="grid",height=540, width=500)
 box_top = Box(app, layout="grid", grid=[0,0,5,1])
-button_go_start = PushButton(box_top, command=go_start,grid=[0,0,2,1], text = "<<", image=HOME+"/m8tricks/images/endl.png")
-button_left = PushButton(box_top, command=left,grid=[2,0,2,1], text = "<",image=HOME+"/m8tricks/images/left.png")
-button_play = PushButton(box_top, command=play,grid=[4,0,2,1], text = "PLAY", image=HOME+"/m8tricks/images/play.png")
-button_stop = PushButton(box_top, command=stop,grid=[6,0,2,1], text = "STOP",enabled=False, image=HOME+"/m8tricks/images/stop.png")
-button_right = PushButton(box_top, command=right,grid=[8,0,2,1], text = ">",image=HOME+"/m8tricks/images/right.png")
-button_go_end = PushButton(box_top, command=go_end,grid=[10,0,2,1], text = ">>",image=HOME+"/m8tricks/images/endr.png")
+button_go_start = PushButton(box_top, command=go_start,grid=[0,0,2,1], text = "<<", image=HERE + "/images/endl.png")
+button_left = PushButton(box_top, command=left,grid=[2,0,2,1], text = "<",image=HERE + "/images/left.png")
+button_play = PushButton(box_top, command=play,grid=[4,0,2,1], text = "PLAY", image=HERE + "/images/play.png")
+button_stop = PushButton(box_top, command=stop,grid=[6,0,2,1], text = "STOP",enabled=False, image=HERE + "/images/stop.png")
+button_right = PushButton(box_top, command=right,grid=[8,0,2,1], text = ">",image=HERE + "/images/right.png")
+button_go_end = PushButton(box_top, command=go_end,grid=[10,0,2,1], text = ">>",image=HERE + "/images/endr.png")
 checkbox_repeat = CheckBox(app, text=" Repeat",grid=[6,0,1,1])
 box_framerate = Box(app, layout="grid", grid=[7,0,2,1])
 box_framerate.set_border(0,"#ff0000")
