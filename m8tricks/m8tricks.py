@@ -1,3 +1,5 @@
+"A grid editor for the SenseHAT on Raspberry Pi"
+
 # Write your code here :-)
 from guizero import App, PushButton, Slider, Waffle, Box,Text, Combo,CheckBox, yesno, info, error, MenuBar, warn
 import os
@@ -6,7 +8,7 @@ import ast
 from tkinter import filedialog
 from pathlib import Path
 
-HOME = str(Path.home())
+#HOME = str(Path.home())
 
 import os, sys
 
@@ -431,4 +433,5 @@ else:
         text_rotation.disable()
         combo_rotation.disable()
 
-app.display()
+#app.display()
+main = app.display

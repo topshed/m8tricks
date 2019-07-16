@@ -1,0 +1,3 @@
+include project.rst
+include licence.md
+include m8tricks/images/*.png
