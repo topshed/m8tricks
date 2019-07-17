@@ -29,17 +29,18 @@ This software is written for Python3.5 and later.
 
 ###Basic features
 
-On the left hand side are a set of buttons to select the desired LED colour.
+On the left is a 8x8 grid representing the SenseHAT LED matrix.
 
-The currently selected colour is shown in the circle below the buttons.
+On the right hand side are a set of square buttons to select the desired LED colour.
+
+The currently selected colour is shown in the square below the matrix.
 
 To set an LED's colour, click on its position in the editing window. If the LED is already set to a colour then clicking again will turn it to off, even if you have selected a new colour as the current one in use. Clicking a second time will set the LED to the new colour.
 
-To add a new frame, click on the **>>** button. This will create a duplicate on the current frame and increment the frame number displayed above. If you want a blank frame rather than a copy of the preceding one, just click the 'clear frame' button.
+To add a new frame, click on the **New** button. This will create a new blank frame and increment the frame number displayed to the left of the button. If you want a copy of the preceding frame rather than a blank one, just click the **Duplicate**  button.
 
-The **>>** button is also used to move to the next frame if one exists.
+The arrow buttons at the top are used to navigate through the frames.
 
-Similarly, the **<<** button moves backwards through the frames of the animation.
 
 The '**Play on LEDs**' button will load the image you have created onto the LED matrix and – if there is more than one frame - run through the frames of the00 animation.
 

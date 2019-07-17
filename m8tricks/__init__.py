@@ -1,5 +1,5 @@
 __project__ = 'm8tricks'
-__version__ = '0.4'
+__version__ = '0.6'
 __keywords__ = ['raspberrypi', 'sensehat']
 __author__ = "Richard Hayler"
 __author_email__ = ''
