@@ -406,33 +406,37 @@ menubar = MenuBar(app,
                         ["Export as", export_as_python]
                          ]
                   ])
-if os.path.isfile("/proc/device-tree/hat/product"):
-    file = open("/proc/device-tree/hat/product","r")
-    hat = file.readline()
-    if  hat == "Sense HAT\x00":
-        #print('Sense HAT detected')
-        file.close()
+
+def startup():
+    global NOHAT
+    global ONEMU
+    if os.path.isfile("/proc/device-tree/hat/product"):
+        file = open("/proc/device-tree/hat/product","r")
+        hat = file.readline()
+        if  hat == "Sense HAT\x00":
+            #print('Sense HAT detected')
+            file.close()
+        else:
+            #print("No SenseHAT detected")
+            no_hat_check()
     else:
         #print("No SenseHAT detected")
         no_hat_check()
-else:
-    #print("No SenseHAT detected")
-    no_hat_check()
 
-
-if not NOHAT: # SenseHat detected to run normally
-    from sense_hat import SenseHat
-    sh = SenseHat()
-    sh.clear(0,0,0)
-else:
-    if ONEMU: # No SenseHat - and we're on a Pi so try the emulator
-        from sense_emu import SenseHat
+    if not NOHAT: # SenseHat detected to run normally
+        from sense_hat import SenseHat
         sh = SenseHat()
         sh.clear(0,0,0)
-        NOHAT = False
-    else: #Disable SenseHat functions
-        text_rotation.disable()
-        combo_rotation.disable()
+    else:
+        if ONEMU: # No SenseHat - and we're on a Pi so try the emulator
+            from sense_emu import SenseHat
+            sh = SenseHat()
+            sh.clear(0,0,0)
+            NOHAT = False
+        else: #Disable SenseHat functions
+            text_rotation.disable()
+            combo_rotation.disable()
 
-#app.display()
-main = app.display
+    app.display()
+
+main = startup
