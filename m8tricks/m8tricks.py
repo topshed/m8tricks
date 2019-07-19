@@ -18,12 +18,17 @@ def startup():
     ONEMU = False
 
     def no_hat_check():
-       # global NOHAT
-       # global ONEMU
+        global NOHAT
+        global ONEMU
         NOHAT = yesno("No SenseHAT detected", "No SenseHat detected - Do you want to carry on anyway?")
         if NOHAT:
             if "arm" in  os.uname().machine:
                 ONEMU = yesno("Looks like a Pi","Do you want to try to run in the SenseHat emulator?")
+                if ONEMU:
+                    if not os.path.isfile("/usr/bin/sense_emu_gui"):
+                        warn("Sorry", "It doesn't look like the SenseHAT emulator is installed")
+                        sys.exit()
+
 
         else:
             sys.exit()
@@ -418,10 +423,10 @@ def startup():
         file = open("/proc/device-tree/hat/product","r")
         hat = file.readline()
         if  hat == "Sense HAT\x00":
-            print('Sense HAT detected')
+            #print('Sense HAT detected')
             file.close()
         else:
-            print("No SenseHAT detected")
+            #print("No SenseHAT detected")
             no_hat_check()
     else:
         #print("No SenseHAT detected")
@@ -444,4 +449,3 @@ def startup():
     app.display()
 
 main = startup
-
