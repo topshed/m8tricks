@@ -28,6 +28,8 @@ def startup():
                     if not os.path.isfile("/usr/bin/sense_emu_gui"):
                         warn("Sorry", "It doesn't look like the SenseHAT emulator is installed")
                         sys.exit()
+            else:
+                warn("No pi!", "It doesn't look like the you're on a Raspberry Pi. You can still save animations and images.")
 
 
         else:
