@@ -7,6 +7,7 @@ from time import sleep
 import ast
 from tkinter import filedialog
 from pathlib import Path
+import time
 
 def startup():
 
@@ -14,8 +15,12 @@ def startup():
     HERE = os.path.dirname(os.path.realpath(__file__))
     global NOHAT
     global ONEMU
+    global tstamp
+    tstamp = ""
     NOHAT = False
     ONEMU = False
+    global framerate
+    framerate = 1
 
     def no_hat_check():
         global NOHAT
@@ -52,6 +57,7 @@ def startup():
     current_frame_number =1
     framerate =  1 # frames per second
     global looping
+
     looping = False
 
     def illum_pixel(x,y):
@@ -82,6 +88,7 @@ def startup():
         elif y == 5:
             col = (255,255,255)
             button_clear.text_color = "black"
+
         elif y == 6:
             col = (255,0,255)
             button_clear.text_color = "black"
@@ -133,6 +140,7 @@ def startup():
         if current_frame_number != len(frames): # not last frame
             for f in range(len(frames), current_frame_number, -1):
                 frames[f+1] = frames[f].copy()
+
         frames[current_frame_number+1] = blank_frame.copy()
         current_frame_number +=1
 
@@ -196,6 +204,7 @@ def startup():
 
         if len(frames) >= 3:
             if current_frame_number == 1:
+
                 for x in range(8):
                     for y in range(8):
                         next_matrix.set_pixel(x,y,frames[current_frame_number+1][(y*8)+x])
@@ -231,28 +240,31 @@ def startup():
             current_frame_number +=1
             load_frame()
 
-    def right_play():
+    def right_play(tin):
+        global tstamp
         global current_frame_number
         global stopped
         global looping
-        if (current_frame_number < len(frames)) and not stopped:
-            current_frame_number +=1
-            load_frame()
-        if (current_frame_number == len(frames)) and not stopped:
+        if tstamp == tin:
+            if (current_frame_number < len(frames)) and not stopped:
+                current_frame_number +=1
+                load_frame()
+            if (current_frame_number == len(frames)) and not stopped:
 
-            button_play.enable()
-            button_stop.disable()
-            slider_framerate.enable()
-            button_go_end.enable()
-            button_go_start.enable()
-            button_left.enable()
-            button_right.enable()
-            if checkbox_repeat.value == 1:
-                looping = True
-                current_frame_number = 0
-                play()
-            else:
-                stopped = True
+                button_play.enable()
+                button_stop.disable()
+                slider_framerate.enable()
+                button_go_end.enable()
+                button_go_start.enable()
+                button_left.enable()
+                button_right.enable()
+                if checkbox_repeat.value == 1:
+                    looping = True
+                    current_frame_number = 0
+                    play()
+
+                else:
+                    stopped = True
 
 
     def go_end():
@@ -268,9 +280,11 @@ def startup():
 
 
     def play():
+        global framerate
         global stopped
         global current_frame_number
         global looping
+        global tstamp
         if len(frames) > 1:
             button_play.disable()
             button_stop.enable()
@@ -281,13 +295,17 @@ def startup():
             button_right.disable()
             slider_framerate.disable()
             stopped = False
+            tstamp = str(time.time())
             t =  int(1000/framerate)
             if looping:
                 for i in range(1,len(frames)+1): # because we set current_frame_number = 0 when looping we need an extra iteration
-                        frame_status_text.after(t*i,right_play)
+                        frame_status_text.after(t*i,right_play,args=[tstamp])
+                        
             else:
                 for i in range(1,len(frames)):
-                        frame_status_text.after(t*i,right_play)
+                        frame_status_text.after(t*i,right_play,args=[tstamp])
+                        
+                                      
 
 
     def stop():
@@ -300,6 +318,8 @@ def startup():
         button_go_start.enable()
         button_left.enable()
         button_right.enable()
+        #for i in range(len(frames)):
+         #   frame_status_text.cancel(right_play)
 
 
     def export_as_python():
@@ -309,7 +329,7 @@ def startup():
                                             filetypes = (("python files","*.py"),("all files","*.*")))
         if len(filename) != 0:
             with open(filename,"w") as export_file:
-                export_file.write("# 8x8Grid Editor output file \n")
+                export_file.write("# m8tricks output file \n")
                 export_file.write("from sense_hat import SenseHat\n")
                 export_file.write("from time import sleep\n")
                 export_file.write("sh = SenseHat()\n")
@@ -330,7 +350,7 @@ def startup():
         if len(filename) != 0:
             with open(filename,"r") as import_file:
                 line1 = import_file.readline()
-                if line1 == "# 8x8Grid Editor output file \n":
+                if line1 == "# m8tricks output file \n":
                     #print("This looks like an 8x8 Grid Editor file")
                     try:
                         for line in import_file:
@@ -343,7 +363,7 @@ def startup():
                     except:
                         error("Import failed", "Sorry, that file could not be imported")
                 else:
-                    not_our_file = yesno("Uh-oh","This doesn't look like an 8x8 Grid Editor file. Carry on trying to import it?")
+                    not_our_file = yesno("Uh-oh","This doesn't look like a m8tricks file. Carry on trying to import it?")
                     if not_our_file == True:
                         try:
                             for line in import_file:
@@ -364,7 +384,7 @@ def startup():
     def sh_rotation():
         sh.set_rotation(int(combo_rotation.value))
 
-    app = App(title="8x8 Grid Editor",layout="grid",height=540, width=500)
+    app = App(title="m8tricks",layout="grid",height=540, width=500)
     box_top = Box(app, layout="grid", grid=[0,0,5,1])
     button_go_start = PushButton(box_top, command=go_start,grid=[0,0,2,1], text = "<<", image=HERE + "/images/endl.png")
     button_left = PushButton(box_top, command=left,grid=[2,0,2,1], text = "<",image=HERE + "/images/left.png")
@@ -420,7 +440,6 @@ def startup():
                       ])
 
 
-    #print("starting")
     if os.path.isfile("/proc/device-tree/hat/product"):
         file = open("/proc/device-tree/hat/product","r")
         hat = file.readline()
@@ -450,4 +469,5 @@ def startup():
 
     app.display()
 
-main = startup
+#main = startup
+startup()
