@@ -4,14 +4,17 @@ Current release: 0.7 Beta
 
 Please raise an issue on guthub if you encounter any problems.
 
-This Python [GuiZero] (https://lawsie.github.io/guizero/) application is for creating 8x8 pixel images and animations for a Raspberry Pi [Sense HAT] (https://www.raspberrypi.org/blog/buy-the-sense-hat-as-seen-in-space/) (as used on the Astro Pi) LED Matrix.
+This Python [GuiZero](https://lawsie.github.io/guizero/) application is for creating 8x8 pixel images and animations for a Raspberry Pi [Sense HAT](https://www.raspberrypi.org/blog/buy-the-sense-hat-as-seen-in-space/) LED Matrix.
 
 ![alt tag](https://raw.githubusercontent.com/topshed/m8tricks/master/readme_images/m8tricks1.png)
 
 
-###Installation
+### Installation
 
 This software is written for Python3.5 and later.
+
+1. Open a terminal window.
+2. Type:
 
 ```Python
 
@@ -29,7 +32,7 @@ This software is written for Python3.5 and later.
 M8tricks is intended for use on Raspbian, but should work on other platforms. Obviously you can only attach a SenseHAT to a Raspberry Pi but you'll still be able to create and save Python files that can be transferred onto Raspberry Pi and run there later.
 
 
-###Basic features
+### Basic features
 
 On the left is a 8x8 grid representing the SenseHAT LED matrix.
 
@@ -39,13 +42,15 @@ The currently selected colour is shown in the square below the matrix and labell
 
 To set an LED's colour, click on its position in the big 8x8 grid. If the LED is already set to a colour then clicking again will turn it to off, even if you have selected a new colour as the current one in use. Clicking a second time will set the LED to the new colour.
 
-The '**LED Rotation**' drop-down allows you to rotate the image displayed on the SenseHAT LEDs by 90 degrees clockwise for SenseHAT. It will not alter the orientation of the image within the editor.
+The '**LED Rotation**' drop-down allows you to rotate the image displayed on the SenseHAT LEDs by 90 degrees clockwise for SenseHAT. It will not alter the orientation of the image within the m8tricks editor.
 
-The '**Clear**' button will set all the LEDs on the screen to the selected colour. To turn all the LEDs off, select the Black colour first.
+The '**Clear**' button will set all the LEDs on the screen to the selected colour.
 
 ![alt tag](https://raw.githubusercontent.com/topshed/m8tricks/master/readme_images/m8tricks3.png)
 
-#### Animations
+To turn all the LEDs off, select the Black colour first.
+
+### Animations
 
 You can create animations by sequentially loading frames.
 
@@ -63,7 +68,7 @@ The green Play button will step through the animation starting from the currentl
 
 To increase or decrease the speed at which the animation is played, use the framerate slider. The maximum is 25 fps. If you want the animation to loop repeatedly, check the **Repeat** checkbox.
 
-#### Saving your masterpiece
+### Saving your masterpiece
 
 The File menu allows you to export your frame or animation in a python file.
 
@@ -78,7 +83,7 @@ python3 myanimation.py
 You can also load back in previously saved animations to edit or extend them. Use the Import option.
 
 
-###Colour Definitions:
+### Colour Definitions:
 
 RED: [255,0,0]
 
