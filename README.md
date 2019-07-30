@@ -43,6 +43,7 @@ The '**LED Rotation**' drop-down allows you to rotate the image displayed on the
 
 The '**Clear**' button will set all the LEDs on the screen to the selected colour. To turn all the LEDs off, select the Black colour first.
 
+![alt tag](https://raw.githubusercontent.com/topshed/m8tricks/master/readme_images/m8tricks3.png)
 
 #### Animations
 
@@ -56,13 +57,19 @@ The top of the editor has a familiar set of 6 buttons for stepping through the f
 
 At the bottom of the editor window you can see the previous frame on the left and the next frame on the right.
 
+![alt tag](https://raw.githubusercontent.com/topshed/m8tricks/master/readme_images/m8tricks2.png)
+
 The green Play button will step through the animation starting from the currently shown frame. So if you want to run your entire sequence from the start, first click on the leftmost blue arrow and then press play. The red pause button will stop the animation at the current frame.
 
 To increase or decrease the speed at which the animation is played, use the framerate slider. The maximum is 25 fps. If you want the animation to loop repeatedly, check the **Repeat** checkbox.
 
 #### Saving your masterpiece
 
-The File menu allows you to export your frame or animation in a python file. This can be run outside of the m8tricks editor through a Python editor like Mu or Thonny. or from the command line:
+The File menu allows you to export your frame or animation in a python file.
+
+![alt tag](https://raw.githubusercontent.com/topshed/m8tricks/master/readme_images/m8tricks4.png)
+
+This can be run outside of the m8tricks editor through a Python editor like Mu or Thonny. or from the command line:
 
 ```python
 python3 myanimation.py
