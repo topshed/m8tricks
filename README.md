@@ -1,6 +1,6 @@
 # M8tricks
 
-Current release: 0.7 Beta
+Current release: 0.71 Beta
 
 Please raise an issue on guthub if you encounter any problems.
 
@@ -28,6 +28,8 @@ This software is written for Python3.5 and later.
 2. Run `m8tricxks`. This will check whether if you have a SenseHAT attached to your Raspberry Pi. If not, it will ask if you want to run the emulator instead.
 
 ### Getting started on other platforms.
+
+The same as above.
 
 M8tricks is intended for use on Raspbian, but should work on other platforms. Obviously you can only attach a SenseHAT to a Raspberry Pi but you'll still be able to create and save Python files that can be transferred onto Raspberry Pi and run there later.
 
